@@ -6,6 +6,7 @@
         <script crossorigin="anonymous" src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
         <script crossorigin="anonymous" src="https://unpkg.com/@material-ui/core@latest/umd/material-ui.production.min.js"></script>
         <script crossorigin="anonymous" src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script crossorigin="anonymous" src="https://unpkg.com/axios/dist/axios.min.js"></script>
         </head>
     <body>
         <div id="root">
@@ -42,16 +43,32 @@
             */
             
             //example 6
+            /*
             const {
                 Button,
-                CircularProgress,
-                TextField
             } = MaterialUI;
-
-            let onLoginClick = function (){
-                console.log('signed-in');
+            // +
+            let reqSum = async (param1, param2) => {
+                //axios.defaults.baseURL = 'localhost';
+                let axiosConfig = {
+                    headers: {
+                        'Content-Type': 'application/json;charset=UTF-8', 'Access-Control-Allow-Origin': '*'
+                    }
+                }
+                let params = {
+                    param1: param1,
+                    param2: param2
+                }
+                let res = await axios.post("/sum", params, axiosConfig);
+                if(res){
+                    console.log(res.data.sum);
+                }
             }
-
+            // !
+            let onLoginClick = () => {
+                //console.log('signed-in');
+                reqSum(Math.random(),Math.random());
+            }
             let App = (props) => {
                 return(<div>
                         <Button 
@@ -59,15 +76,12 @@
                             onClick={onLoginClick}>
                             Google Login
                         </Button>
-                        <br/>
-                        <TextField id="standard-basic"      label="Something here!" />
-                        <br/>
-                        <CircularProgress/>
-
                     </div>
                 );
             };
             ReactDOM.render(<App/>, document.getElementById('root'));
+            */
+            //example 7
         </script>
     </body>
 </html>
