@@ -2,12 +2,72 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    </head>
+        <script crossorigin="anonymous" src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin="anonymous" src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin="anonymous" src="https://unpkg.com/@material-ui/core@latest/umd/material-ui.production.min.js"></script>
+        <script crossorigin="anonymous" src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        </head>
     <body>
         <div id="root">
-            <script type="module" src="./app.js"></script>
         </div>
+        <script type="text/babel">
+            //example 5
+            /*
+            const {
+                Button,
+                CircularProgress,
+                TextField
+            } = MaterialUI;
+
+            let onLoginClick = function (){
+                console.log('signed-in');
+            }
+
+            let App = (props) => {
+                return(<div>
+                        <Button 
+                            variant="contained"
+                            onClick={onLoginClick}>
+                            Google Login
+                        </Button>
+                        <br/>
+                        <TextField id="standard-basic"      label="Something here!" />
+                        <br/>
+                        <CircularProgress/>
+
+                    </div>
+                );
+            };
+            ReactDOM.render(<App/>, document.getElementById('root'));
+            */
+            
+            //example 6
+            const {
+                Button,
+                CircularProgress,
+                TextField
+            } = MaterialUI;
+
+            let onLoginClick = function (){
+                console.log('signed-in');
+            }
+
+            let App = (props) => {
+                return(<div>
+                        <Button 
+                            variant="contained"
+                            onClick={onLoginClick}>
+                            Google Login
+                        </Button>
+                        <br/>
+                        <TextField id="standard-basic"      label="Something here!" />
+                        <br/>
+                        <CircularProgress/>
+
+                    </div>
+                );
+            };
+            ReactDOM.render(<App/>, document.getElementById('root'));
+        </script>
     </body>
 </html>

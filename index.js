@@ -49,7 +49,7 @@ app.listen(_webPort, () => {
 */
 
 //example 4
-/*
+
 const bodyParser = require("body-parser");
 const express = require("express");
 const cors = require("cors");
@@ -76,4 +76,3 @@ router.get("/app.js", (req, res) => {
 app.listen(_webPort, () => {
     console.log(`web server running on ${_webPort}`);
 });
-*/
