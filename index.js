@@ -37,9 +37,8 @@ global.path = __dirname;
 
 app.use(bodyParser.json());
 app.use("/", router);
-
+//+
 router.get("/", (req, res) => {
-    console.log(path);
     res.sendFile(`${path}/web-client/index.html`);
 });
 
@@ -69,7 +68,6 @@ router.get("/", (req, res) => {
 });
 // +
 router.get("/app.js", (req, res) => {
-    console.log(path);
     res.sendFile(`${path}/web-client/app.js`);
 });
 
@@ -79,7 +77,7 @@ app.listen(_webPort, () => {
 */
 
 //example 6
-/*
+
 const bodyParser = require("body-parser");
 const express = require("express");
 const cors = require("cors");
@@ -114,4 +112,3 @@ router.post("/sum", (req, res) => {
 app.listen(_webPort, () => {
     console.log(`web server running on ${_webPort}`);
 });
-*/

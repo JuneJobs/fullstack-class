@@ -7,8 +7,36 @@
         <script crossorigin="anonymous" src="https://unpkg.com/@material-ui/core@latest/umd/material-ui.production.min.js"></script>
         <script crossorigin="anonymous" src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
         <script crossorigin="anonymous" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        
+        <meta name="google-signin-client_id" content="853166385610-6vusf5l1il5gb67j9ajgp8t2bvr6rrib.apps.googleusercontent.com">
         </head>
     <body>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <script>
+            function init() {
+                console.log("init");
+                gapi.load('auth2', () => {  //ready.
+                    console.log('auth2');
+                    window.gauth = gapi.auth2.init({
+                        client_id: "853166385610-6vusf5l1il5gb67j9ajgp8t2bvr6rrib.apps.googleusercontent.com"
+                    })
+                    gauth.then(()=>{
+                        console.log('googleAuth success');
+                    }, () => {
+                        console.log('googleAuth Fail');
+                    })
+                })
+            }
+        </script>
+        <script>
+            function onSignIn(googleUser) {
+                var profile = googleUser.getBasicProfile();
+                console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                console.log('Name: ' + profile.getName());
+                console.log('Image URL: ' + profile.getImageUrl());
+                console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+            }
+        </script>
         <div id="root">
         </div>
         <script type="text/babel">
@@ -83,5 +111,6 @@
             */
             //example 7
         </script>
+        <script src="https://apis.google.com/js/platform.js" async defer></script>
     </body>
 </html>
