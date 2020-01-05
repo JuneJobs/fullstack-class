@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script crossorigin="anonymous" src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin="anonymous" src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin="anonymous" src="https://unpkg.com/@material-ui/core@latest/umd/material-ui.production.min.js"></script>
+        <script crossorigin="anonymous" src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <script crossorigin="anonymous" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        
+        <meta name="google-signin-client_id" content="853166385610-6vusf5l1il5gb67j9ajgp8t2bvr6rrib.apps.googleusercontent.com">
+        </head>
+    <body>
+        <div id="root">
+            <div class="g-signin2" data-onsuccess="onGoogleSignIn"></div>
+            <script>
+                function init() {
+                    console.log("init");
+                    gapi.load('auth2', () => {  //ready.
+                        console.log('auth2');
+                        let gauth = gapi.auth2.init({
+                            client_id: "853166385610-6vusf5l1il5gb67j9ajgp8t2bvr6rrib.apps.googleusercontent.com"
+                        });
+                        gauth.then(()=>{
+                            console.log('googleAuth success');
+                        }, () => {
+                            console.log('googleAuth Fail');
+                        });
+                    });
+                }
+
+                let  add_user = async (email, cb) => {
+                    let axiosConfig = {
+                        headers: {
+                            'Content-Type': 'application/json;charset=UTF-8', 'Access-Control-Allow-Origin': '*'
+                        }
+                    }
+                    let params = {
+                        email: email
+                    }
+                    let res = await axios.post("/add_user", params, axiosConfig);
+                    if(res){
+                        console.log(res.data);
+                        if(res.data.result === 1 || res.data.result === 0){
+                            cb(true);
+                        } else {
+                            console.error('Something wrong.');
+                            cb(false);
+                        }
+                    }
+                }
+
+                function onGoogleSignIn(googleUser) {
+                    console.log('googleAuth signed in successful');
+                    let profile = googleUser.getBasicProfile();
+                    console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+                    console.log('Name: ' + profile.getName());
+                    console.log('Image URL: ' + profile.getImageUrl());
+                    console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+                    add_user(profile.getEmail(),(result) =>{
+                        if(result === true) {
+                            onMainPage(profile.getName());
+                        } else {
+                            //error something..
+                        }
+                    });
+                }
+                function onGoogleSignOut() {
+                    let auth2 = gapi.auth2.getAuthInstance();
+                    auth2.signOut().then(() => {
+                        console.log('User signed out.');   
+                        window.location.href = 'http://localhost';
+                    });
+                    auth2.disconnect();
+                    alert("Good bye sir!");
+                }
+
+            </script>
+        </div>
+        <script type="text/babel">
+            //example 7
+            const {
+                Button,
+                Card,
+                CardContent,
+                Typography
+            } = MaterialUI;
+
+            const useStyle = {
+                card: {
+                    minWidth: 275
+                },
+                title: {
+                    fontSize: 14
+                }
+            };
+            
+            function onSignOutClick(){
+                onGoogleSignOut();
+            };
+
+            function onMainPage(txt_user_name){
+                let App = (props) => {
+                    return(
+                        <Card className={useStyle.card}>
+                            <CardContent>
+                                <Typography className={useStyle.title} color="textSecondary" gutterBottom>
+                                    User name: {txt_user_name}
+                                </Typography>
+                                    Hello, sir. What can I do for you?
+                            </CardContent>
+                            <Button variant="contained"
+                                onClick={onSignOutClick}>
+                                Sign-out
+                            </Button>
+                        </Card>
+                    );
+                };
+                ReactDOM.render(<App/>, document.getElementById('root'));         
+            };
+            
+        </script>
+        <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+    </body>
+</html>
